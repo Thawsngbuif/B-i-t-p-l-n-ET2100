@@ -1,0 +1,5 @@
+ET2100	Cau truc du lieu va giai thuat
+ET2040	Cau kien dien tu
+ET2072	Ly thuyet thong tin
+ET2050	Ly thuyet mach
+ET2060	Tin hieu va he thong
