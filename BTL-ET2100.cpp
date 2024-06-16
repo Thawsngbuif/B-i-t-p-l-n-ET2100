@@ -602,7 +602,7 @@ void func2()
       do
       {
         //kiem tra ma giang vien nguoi dung nhap co ton tai khong
-        printf(" Nhap giang vien %d: ", j + 1);
+        printf("Nhap ma giang vien %d: ", j + 1);
         scanf("%s", magv);
         listgv[j] = findgv(magv);
         if (listgv[j] == NULL)
@@ -773,12 +773,82 @@ void func5() {
   }
 }
 
-//sap xep thong tin 
-void func6(){}
+//sap xep hoc phan theo ma hoc phan
+void swaphp(pnodehp &P, pnodehp &Q)
+{
+	pnodehp temp = new nodehp;
+	temp->hp = P->hp;
+	P->hp = Q->hp;
+	Q->hp = temp->hp;
+}
+void sapxephp()
+{
+	if(dshp == NULL) return;
+	pnodehp P, Q;
+	for (P = dshp; P != NULL; P = P->next){
+		for (Q = P->next; Q != NULL; Q = Q->next){
+			if(strcmp(P->hp.mahp, Q->hp.mahp) > 0) swaphp(P,Q);
+    }
+  }
+}
 
+//sap xep giang vien theo ma giang vien
+void swapgv(pnodegv &P, pnodegv &Q)
+{
+  giangvien temp = P->gv;
+  P->gv = Q->gv; 
+  Q->gv = temp;
+}
+void sapxepgv()
+{
+  if(dsgv == NULL) return;
+  pnodegv P,Q;
+  for (P = dsgv; P != NULL; P = P->next)
+  {
+    for(Q = P->next; Q != NULL; Q = Q->next)
+    {
+      if(strcmp(P->gv.magv, Q->gv.magv) > 0) swapgv(P, Q);
+    }
+  }
+}
+
+
+//ham sap xep thong tin danh sach hoc phan theo thu tu bang chu cai
+void func6(){
+  char option;
+  printf("\nSap xep thong tin\n");
+  printf("\t1. Sap xep thong tin hoc phan theo ma hoc phan\n");
+  printf("\t2. Sap xep thong tin giang vien theo ma giang vien\n");
+  do
+  {
+    printf("\nChon chuc nang: ");
+    fflush(stdin);
+    option = getchar();
+    if (option < '1' || option > '2')
+      printf("Chuc nang khong hop le. Vui long nhap lai.\n");
+  } while (option < '1' || option > '2');
+  switch (option)
+  {
+  case '1':
+  {
+	  sapxephp();
+	  savehp();
+    printf("Da sap xep xong !\n");
+    break;
+  }
+  case '2':
+  {
+    sapxepgv();
+	  savegv();
+    printf("Da sap xep xong !\n");
+    break;
+  }
+  }
+}
 //luu thong tin vao file
 void func7() {
   save();
+  printf("Da luu !\n");
 }
 
 //menu chuong trinh
@@ -800,9 +870,9 @@ void menu()
     printf("Chon chuc nang: ");
     fflush(stdin);
     option = getchar();
-    if (option < '1' || option > '7')
+    if (option < '1' || option > '8')
       printf("Chuc nang khong hop le. Vui long nhap lai.\n");
-  } while (option < '1' || option > '7');
+  } while (option < '1' || option > '8');
   switch (option)
   {
   case '1':
@@ -824,7 +894,7 @@ void menu()
     func6();
     break;
   case '7':
-    func6();
+    func7();
   break;
   case '8':
     exit(0);
@@ -838,3 +908,5 @@ int main()
     menu();
   return 0;
 }
+
+
